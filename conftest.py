@@ -9,15 +9,8 @@ from urls import URL_MAIN_PAGE
 
 @pytest.fixture(scope='function')
 def driver():
-    # Проверяем переменные окружения
-    use_selenoid = (
-            os.environ.get("GITHUB_ACTIONS") == "true" or
-            os.environ.get("USE_SELENOID") == "true" or
-            os.environ.get("DOCKER_COMPOSE") == "true"
-    )
-
-    if use_selenoid:
-        # Подключение к Selenoid
+    # Используем Selenoid, если переменная USE_SELENOID=true
+    if os.environ.get("USE_SELENOID") == "true":
         chrome_options = Options()
         chrome_options.set_capability("browserName", "chrome")
         chrome_options.set_capability("version", "latest")
@@ -31,7 +24,7 @@ def driver():
             options=chrome_options
         )
     else:
-        # Локальный запуск
+        # Локальный запуск (на Mac или в контейнере с Chrome)
         driver = webdriver.Chrome()
 
     yield driver
