@@ -32,6 +32,8 @@ services:
       - selenoid
     tty: true
     command: ["pytest"]
+    environment:
+      - USE_SELENOID=true
 
 networks:
   selenoid:
