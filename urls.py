@@ -1,0 +1,1 @@
+URL_MAIN_PAGE = "https://foodgram-frontend-1.foodgram.education-services.ru/signin"
