@@ -49,3 +49,10 @@ class BasePage:
         # Собираем путь до файла в папке assets
         file_path = root_dir / "assets" / filename
         return str(file_path)
+
+    def lambda_func(self, condition):
+        try:
+            result = self.wait.until(condition)
+            return result if result else ""  # Не возвращаем None
+        except:
+            return
