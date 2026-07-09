@@ -5,7 +5,12 @@ from locators.recipe_cards_locators import RecipeCardsLocators
 
 class RecipeCardsPage(BasePage):
     @allure.step("Получить заголовок карточки рецепта")
+
+    def is_header_visible(self):
+        self.is_element_visible(RecipeCardsLocators.RECIPE_TITLE)
+
     def get_header_recipe_cards(self):
+        self.is_header_visible()
         return self.get_text_from_element(RecipeCardsLocators.RECIPE_TITLE)
 
     @allure.step("Получить описание карточки рецепта")

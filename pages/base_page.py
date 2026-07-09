@@ -45,5 +45,7 @@ class BasePage:
 
     def get_image_path(self, filename: str) -> str:
         # Возвращает абсолютный путь к файлу из папки assets в виде строки
-        file_path = self.ROOT_DIR / "assets" / filename
-        return str(file_path.resolve())
+        root_dir = Path(__file__).resolve().parent.parent
+        # Собираем путь до файла в папке assets
+        file_path = root_dir / "assets" / filename
+        return str(file_path)

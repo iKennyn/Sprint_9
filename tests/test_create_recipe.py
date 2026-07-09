@@ -8,7 +8,7 @@ from data import RECIPE_DATA
 
 class TestCreateRecipe:
     @allure.step("Проверка регистрации нового рецепта")
-    def test_create_recipe(self, driver, login, create_user):
+    def test_create_recipe(self, driver, create_user, login):
         home_page = HomePage(driver)
         home_page.click_to_button_create_recipe()
 
