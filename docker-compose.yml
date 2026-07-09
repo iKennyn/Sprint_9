@@ -1,51 +1,38 @@
 services:
-  # Сервис для запуска ваших тестов
-  tests:
-    build: .
-    container_name: sprint_tests
-    depends_on:
-      - selenoid
-      - selenoid-ui
-    environment:
-      - SELENOID_HOST=selenoid
-      - SELENOID_PORT=4444
-    volumes:
-      - ./allure-results:/app/allure-results  # Если используете Allure
-      - ./tests:/app/tests
-    networks:
-      - selenoid-network
 
-  # Selenoid — запускает браузеры
   selenoid:
-    image: aerokube/selenoid:latest
+    image: "aerokube/selenoid"
     container_name: selenoid
-    command: [
-      "-listen", ":4444",
-      "-service-address", "selenoid:4444",
-      "-browsers", "chrome:latest",
-      "-timeout", "10m",
-      "-session-attempt-timeout", "10m"
-    ]
-    environment:
-      - TZ=UTC
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config/browsers.json:/etc/selenoid/browsers.json  # Опционально
-    networks:
-      - selenoid-network
-
-  # UI для просмотра запущенных тестов (опционально)
-  selenoid-ui:
-    image: aerokube/selenoid-ui:latest
-    container_name: selenoid-ui
-    command: ["--selenoid-uri", "http://selenoid:4444"]
     ports:
-      - "8080:8080"
+      - "4444:4444"
     networks:
-      - selenoid-network
+      - selenoid
+    volumes:
+      - "./config.json:/etc/selenoid/config.json"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: ["-conf", "/etc/selenoid/config.json", "-container-network", "selenoid"]
+
+  selenoid-ui:
+    image: "aerokube/selenoid-ui:latest"
+    container_name: selenoid-ui
+    links:
+      - selenoid
+    ports:
+      - "8081:8080"
+    networks:
+      - selenoid
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+
+  test_docker:
+    build: .
+    container_name: test_docker
     depends_on:
       - selenoid
+    networks:
+      - selenoid
+    tty: true
+    command: ["pytest"]
 
 networks:
-  selenoid-network:
-    driver: bridge
+  selenoid:
+    name: selenoid
