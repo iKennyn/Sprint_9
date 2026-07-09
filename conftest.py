@@ -3,15 +3,41 @@ import pytest
 from selenium import webdriver
 from pages.login_page import LoginPage
 from pages.registration_user_page import RegistrationPage
+from selenium.webdriver.chrome.options import Options
 from urls import URL_MAIN_PAGE
 
 
 @pytest.fixture(scope='function')
 def driver():
-    driver = webdriver.Chrome()
+    # Проверяем переменные окружения
+    use_selenoid = (
+            os.environ.get("GITHUB_ACTIONS") == "true" or
+            os.environ.get("USE_SELENOID") == "true" or
+            os.environ.get("DOCKER_COMPOSE") == "true"
+    )
+
+    if use_selenoid:
+        # Подключение к Selenoid
+        chrome_options = Options()
+        chrome_options.set_capability("browserName", "chrome")
+        chrome_options.set_capability("version", "latest")
+        chrome_options.set_capability("selenoid:options", {
+            "enableVNC": True,
+            "enableVideo": False
+        })
+
+        driver = webdriver.Remote(
+            command_executor="http://selenoid:4444/wd/hub",
+            options=chrome_options
+        )
+    else:
+        # Локальный запуск
+        driver = webdriver.Chrome()
+
     yield driver
     driver.quit()
     os.system("pkill -f Chrome")
+
 
 @pytest.fixture(scope='function')
 def create_user(driver):
