@@ -1,14 +1,5 @@
 services:
 
-  browser-loader:
-    image: selenoid/chrome:128.0
-    container_name: browser-loader
-    command: [ "echo", "Browser image loaded" ]
-    networks:
-      - selenoid
-    restart: "no"
-
-
   selenoid:
     image: "aerokube/selenoid"
     container_name: selenoid
