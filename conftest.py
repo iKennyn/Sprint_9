@@ -13,7 +13,7 @@ def driver():
     if os.environ.get("USE_SELENOID") == "true":
         chrome_options = Options()
         chrome_options.set_capability("browserName", "chrome")
-        chrome_options.set_capability("version", "latest")
+        chrome_options.set_capability("version", "128.0")
         chrome_options.set_capability("selenoid:options", {
             "enableVNC": True,
             "enableVideo": False
