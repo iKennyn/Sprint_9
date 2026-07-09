@@ -13,6 +13,9 @@ WORKDIR /app
 # в текущую директорию (текущая директория — это /app).
 COPY requirements.txt .
 
+COPY assets /app/assets/
+
+
 # Выполнить в текущей директории команду терминала
 # для установки зависимостей.
 RUN pip install -r requirements.txt
