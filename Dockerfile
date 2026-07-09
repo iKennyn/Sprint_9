@@ -13,9 +13,6 @@ WORKDIR /app
 # в текущую директорию (текущая директория — это /app).
 COPY requirements.txt .
 
-COPY assets /app/assets/
-
-
 # Выполнить в текущей директории команду терминала
 # для установки зависимостей.
 RUN pip install -r requirements.txt
@@ -24,6 +21,11 @@ RUN pip install -r requirements.txt
 # той директории локального компьютера, где сохранён Dockerfile,
 # в текущую рабочую директорию образа — /app.
 COPY . .
+
+# Копируем папку assets поверх (перезаписываем, если нужно)
+# и устанавливаем права доступа
+COPY assets /app/assets/
+RUN chmod -R 644 /app/assets/
 
 # При старте контейнера запустить сервер разработки.
 CMD ["pytest", "--alluredir", "allure-results"]

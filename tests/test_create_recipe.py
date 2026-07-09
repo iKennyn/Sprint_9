@@ -13,7 +13,7 @@ class TestCreateRecipe:
         home_page.click_to_button_create_recipe()
 
         create_recipe_page = CreateRecipePage(driver)
-        create_recipe_page.set_recipe_data("Батон.png")
+        create_recipe_page.set_recipe_data("batton.png")
 
         recipe_card = RecipeCardsPage(driver)
         assert (recipe_card.get_header_recipe_cards() == RECIPE_DATA['recipe_name'] and
