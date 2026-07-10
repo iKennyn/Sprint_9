@@ -5,6 +5,7 @@ import allure
 
 from pages.base_page import BasePage
 from locators.registration_page_locators import RegistrationPageLocators
+import helpers
 
 class RegistrationPage(BasePage):
 
@@ -33,7 +34,7 @@ class RegistrationPage(BasePage):
         self.click_to_element(RegistrationPageLocators.CREATE_ACCOUNT_BUTTON)
 
     def enter_user_data(self):
-        data = self.generate_user_data()
+        data = helpers.generate_user_data()
         self.enter_first_name(data['first_name'])
         self.enter_last_name(data['last_name'])
         self.enter_username(data['username'])
@@ -41,28 +42,3 @@ class RegistrationPage(BasePage):
         self.enter_password(data['password'])
         self.click_create_account_button()
         return data
-
-    @staticmethod
-    @allure.step("Рандомная генерация пользователя")
-    def generate_user_data():
-        def generate_random_string(length):
-            letters = string.ascii_lowercase
-            random_string = ''.join(random.choice(letters) for i in range(length))
-            return random_string
-
-        first_name = "Ivan_" + generate_random_string(3)
-        last_name = "Ivanov_" + generate_random_string(5)
-        username = "Ivan" + generate_random_string(3)
-        email = generate_random_string(5) + "@yandex.ru"
-        password = "1001_" + generate_random_string(3)
-
-        # собираем тело запроса
-        payload = {
-            "first_name": first_name,
-            "last_name": last_name,
-            "username": username,
-            "email": email,
-            "password": password
-        }
-        print(payload)
-        return payload

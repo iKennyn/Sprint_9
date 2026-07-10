@@ -8,13 +8,10 @@ from urls import URL_MAIN_PAGE
 class TestLogin:
     @allure.step("Проверка авторизации пользователя")
     def test_login(self, driver, create_user):
-        # Создадим пользователя
-        user_data = create_user
-
         login_page = LoginPage(driver)
         login_page.go_to_url(URL_MAIN_PAGE)
         # Войдем под созданным пользователем
-        login_page.input_login_data(user_data['username'], user_data['password'])
+        login_page.input_login_data(create_user['username'], create_user['password'])
 
         home_page = HomePage(driver)
 

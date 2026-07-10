@@ -21,4 +21,4 @@ class LoginPage(BasePage):
 
     @allure.step("Проверка отображения формы авторизации")
     def get_login_form(self):
-        return self.is_element_visible(LoginPageLocators.LOGIN_FORM)
+        return self.find_element_with_wait(LoginPageLocators.LOGIN_FORM)

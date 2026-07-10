@@ -49,6 +49,5 @@ def login(driver, create_user):
     user_data = create_user
     login_page = LoginPage(driver)
     login_page.go_to_url(URL_MAIN_PAGE)
-    time.sleep(5) # Пользователь создается с задержкой. Не нашел решения сделать задержку по другому.
+    login_page.get_login_form()
     login_page.input_login_data(user_data['username'], user_data['password'])
-
