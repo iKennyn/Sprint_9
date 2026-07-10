@@ -64,3 +64,12 @@ class BasePage:
             return result if result else ""  # Не возвращаем None
         except:
             return
+
+    def close_alert_if_present(self):
+        try:
+            self.wait.until(expected_conditions.alert_is_present())
+            alert = self.driver.switch_to.alert
+            alert.accept()
+            return True
+        except TimeoutException:
+            return False

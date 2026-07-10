@@ -53,13 +53,3 @@ def login(driver, create_user):
     login_page.go_to_url(URL_MAIN_PAGE)
     login_page.get_login_form()
     login_page.input_login_data(user_data['username'], user_data['password'])
-
-
-@pytest.fixture(autouse=True)
-def reset_browser_state(driver):
-    # Очищает состояние браузера между тестами
-    yield
-    driver.delete_all_cookies()
-    driver.execute_script("window.localStorage.clear();")
-    driver.execute_script("window.sessionStorage.clear();")
-    driver.refresh()
