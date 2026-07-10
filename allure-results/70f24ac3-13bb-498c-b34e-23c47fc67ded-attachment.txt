@@ -1,0 +1,1 @@
+{'first_name': 'Ivan_tfy', 'last_name': 'Ivanov_gxxfi', 'username': 'Ivanapx', 'email': 'ffjmt@yandex.ru', 'password': '1001_lza'}
