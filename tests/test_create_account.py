@@ -11,6 +11,7 @@ class TestCreateAccount:
         login_page = LoginPage(driver)
         login_page.go_to_url(URL_MAIN_PAGE)
         login_page.click_sign_up_button()
+        login_page.get_login_form()
 
         registration_page = RegistrationPage(driver)
         registration_page.enter_user_data()

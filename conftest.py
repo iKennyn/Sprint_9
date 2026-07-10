@@ -25,7 +25,6 @@ def driver():
             options=chrome_options
         )
     else:
-        # Локальный запуск (на Mac или в контейнере с Chrome)
         driver = webdriver.Chrome()
 
     yield driver

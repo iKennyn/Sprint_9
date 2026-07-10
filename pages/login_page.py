@@ -11,7 +11,7 @@ class LoginPage(BasePage):
         self.add_text_to_element(LoginPageLocators.PASSWORD_SET, password)
         self.click_to_element(LoginPageLocators.ENTER_BUTTON)
 
-    @allure.step("Клик по кнопке 'Войти'")
+    @allure.step("Клик по кнопке 'Создать аккаунт'")
     def click_sign_up_button(self):
         self.click_to_element(LoginPageLocators.SIGN_UP_BUTTON)
 
@@ -21,4 +21,5 @@ class LoginPage(BasePage):
 
     @allure.step("Проверка отображения формы авторизации")
     def get_login_form(self):
-        return self.find_element_with_wait(LoginPageLocators.LOGIN_FORM)
+        element = self.element_of_visibility(LoginPageLocators.LOGIN_SET and LoginPageLocators.PASSWORD_SET)
+        return element is not None

@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from pathlib import Path
@@ -21,6 +22,13 @@ class BasePage:
         self.wait.until(
             expected_conditions.presence_of_element_located(locator))
         return self.driver.find_element(*locator)
+
+    def element_of_visibility(self, locator):
+        try:
+            element = self.wait.until(expected_conditions.visibility_of_element_located(locator))
+            return element
+        except TimeoutException:
+            return None
 
     @allure.step("Клик по элементу")
     def click_to_element(self, locator):
