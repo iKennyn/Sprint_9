@@ -40,6 +40,9 @@ def create_user(driver):
 
     registration_page = RegistrationPage(driver)
     data = registration_page.enter_user_data()
+    login_page = LoginPage(driver)
+    login_page.get_login_form()
+
     return data
 
 
@@ -50,3 +53,13 @@ def login(driver, create_user):
     login_page.go_to_url(URL_MAIN_PAGE)
     login_page.get_login_form()
     login_page.input_login_data(user_data['username'], user_data['password'])
+
+
+@pytest.fixture(autouse=True)
+def reset_browser_state(driver):
+    # Очищает состояние браузера между тестами
+    yield
+    driver.delete_all_cookies()
+    driver.execute_script("window.localStorage.clear();")
+    driver.execute_script("window.sessionStorage.clear();")
+    driver.refresh()
