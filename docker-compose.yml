@@ -1,6 +1,6 @@
 services:
   selenoid:
-    image: "aerokube/selenoid"
+    image: "aerokube/selenoid:latest-release"
     container_name: selenoid
     ports:
       - "4444:4444"
@@ -12,9 +12,10 @@ services:
     command: ["-conf", "/etc/selenoid/config.json", "-container-network", "selenoid"]
     environment:
       - SE_MANAGER_DOWNLOAD_BROWSER=true
+      - DOCKER_API_VERSION=1.40
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui:latest"
+    image: "aerokube/selenoid-ui:latest-release"
     container_name: selenoid-ui
     links:
       - selenoid
